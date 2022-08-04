@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Error } from '../../topLevelUtil/types/Error';
 import type { Log } from '../../topLevelUtil/types/Log';
+import Navbar from '../general/Navbar';
 import { fetchLogs } from './pagesUtil/methods/logsMethods';
 
 export default function Logs() {
@@ -12,7 +13,8 @@ export default function Logs() {
   if (currentLogs.length > 0 || error) {
     return (
       <main>
-        <div>
+        <Navbar />
+        <section>
           {error
             ? error.errorMessage
             : currentLogs.map((log) => {
@@ -20,7 +22,7 @@ export default function Logs() {
                   <p>{`${log.id} | ${log.projectId} | ${log.type} | ${log.message}`}</p>
                 );
               })}
-        </div>
+        </section>
       </main>
     );
   }
