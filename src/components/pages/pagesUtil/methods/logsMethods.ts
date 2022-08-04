@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
+import { sleep } from '../../../../topLevelUtil/methods/sleep';
 import { Error } from '../../../../topLevelUtil/types/Error';
 import type { Log } from '../../../../topLevelUtil/types/Log';
 
@@ -44,4 +45,32 @@ export const fetchLogs = async (
   }
 
   currentLogsStateFunc(logs);
+};
+
+export const keepLogsUpdated = async (
+  currentLogsStateFunc: Dispatch<SetStateAction<Log[]>>,
+  updaterRunning: Dispatch<SetStateAction<boolean>>,
+  currentWindow: string,
+) => {
+  while (true) {
+    updaterRunning(true);
+
+    if (window.location.pathname !== currentWindow) {
+      break;
+    }
+
+    await sleep(1000);
+
+    const response = await fetch('https://localhost:44370/Logs', {
+      method: 'GET',
+      headers: { accept: 'text/plain' },
+      mode: 'cors',
+    });
+
+    const logs: Log[] = await response.json();
+
+    if (Array.isArray(logs)) {
+      currentLogsStateFunc(logs);
+    }
+  }
 };

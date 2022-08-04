@@ -2,13 +2,22 @@ import { useState } from 'react';
 import { Error } from '../../topLevelUtil/types/Error';
 import type { Log } from '../../topLevelUtil/types/Log';
 import Navbar from '../general/Navbar';
-import { fetchLogs } from './pagesUtil/methods/logsMethods';
+import { fetchLogs, keepLogsUpdated } from './pagesUtil/methods/logsMethods';
 
 export default function Logs() {
   const [currentLogs, setCurrentLogs] = useState<Log[]>([]);
   const [error, setError] = useState<Error | null>(null);
+  const [updaterRunning, setUpdaterRunning] = useState<boolean>(false);
 
-  fetchLogs(setCurrentLogs, setError);
+  if (currentLogs.length === 0) {
+    fetchLogs(setCurrentLogs, setError);
+  }
+
+  if (!updaterRunning && currentLogs.length > 0) {
+    keepLogsUpdated(setCurrentLogs, setUpdaterRunning, '/logs');
+  }
+
+  console.log(currentLogs);
 
   if (currentLogs.length > 0 || error) {
     return (
@@ -19,7 +28,9 @@ export default function Logs() {
             ? error.errorMessage
             : currentLogs.map((log) => {
                 return (
-                  <p>{`${log.id} | ${log.projectId} | ${log.type} | ${log.message}`}</p>
+                  <p
+                    key={log.id}
+                  >{`${log.id} | ${log.projectId} | ${log.type} | ${log.message}`}</p>
                 );
               })}
         </section>
@@ -27,5 +38,10 @@ export default function Logs() {
     );
   }
 
-  return <h1>Loading...</h1>;
+  return (
+    <main>
+      <Navbar />
+      <h1>Loading...</h1>
+    </main>
+  );
 }
