@@ -6,6 +6,7 @@ import type { Log } from '../../../../topLevelUtil/types/Log';
 export const fetchLogs = async (
   currentLogsStateFunc: Dispatch<SetStateAction<Log[]>>,
   errorsStateFunc: Dispatch<SetStateAction<Error | null>>,
+  initialFetchStateFunc: Dispatch<SetStateAction<boolean>>,
 ) => {
   let response;
 
@@ -21,6 +22,7 @@ export const fetchLogs = async (
     };
 
     errorsStateFunc(error);
+    initialFetchStateFunc(true);
     return;
   }
 
@@ -32,6 +34,7 @@ export const fetchLogs = async (
     };
 
     errorsStateFunc(error);
+    initialFetchStateFunc(true);
     return;
   }
 
@@ -41,10 +44,12 @@ export const fetchLogs = async (
     };
 
     errorsStateFunc(error);
+    initialFetchStateFunc(true);
     return;
   }
 
   currentLogsStateFunc(logs);
+  initialFetchStateFunc(true);
 };
 
 export const keepLogsUpdated = async (

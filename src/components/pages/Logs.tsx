@@ -8,18 +8,19 @@ export default function Logs() {
   const [currentLogs, setCurrentLogs] = useState<Log[]>([]);
   const [error, setError] = useState<Error | null>(null);
   const [updaterRunning, setUpdaterRunning] = useState<boolean>(false);
+  const [initialFetchDone, setInitialFetchDone] = useState<boolean>(false);
 
-  if (currentLogs.length === 0) {
-    fetchLogs(setCurrentLogs, setError);
+  if (!initialFetchDone) {
+    fetchLogs(setCurrentLogs, setError, setInitialFetchDone);
   }
 
-  if (!updaterRunning && currentLogs.length > 0) {
+  if (!updaterRunning && initialFetchDone) {
     keepLogsUpdated(setCurrentLogs, setUpdaterRunning, '/logs');
   }
 
   console.log(currentLogs);
 
-  if (currentLogs.length > 0 || error) {
+  if (initialFetchDone || error) {
     return (
       <main>
         <Navbar />
