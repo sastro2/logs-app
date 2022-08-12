@@ -5,6 +5,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Analytics from './components/pages/Analytics';
 import Dashboard from './components/pages/Dashboard';
 import Logs from './components/pages/Logs';
+import LogTypes from './components/pages/LogTypes';
+import Overview from './components/pages/Overview';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(
@@ -14,9 +16,11 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/analytics" element={<Analytics />} />
-        <Route path="/logs" element={<Logs />} />
+        <Route path="/" element={<Overview />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard/analytics" element={<Analytics />} />
+        <Route path="/dashboard/logs" element={<Logs />} />
+        <Route path="/dashboard/types" element={<LogTypes />} />
       </Routes>
       ;
     </BrowserRouter>

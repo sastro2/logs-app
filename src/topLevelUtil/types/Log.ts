@@ -1,6 +1,7 @@
 export type Log = {
-  id: string;
+  id: number;
   projectId: number;
+  timestamp: number;
   type: string;
   message: string;
 };

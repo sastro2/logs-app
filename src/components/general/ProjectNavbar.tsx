@@ -1,28 +1,35 @@
 import { Link } from 'react-router-dom';
 
-export default function Navbar() {
+export default function ProjectNavbar() {
   return (
     <section>
       <Link
         to={{
-          pathname: '/',
+          pathname: '/dashboard',
         }}
       >
         Dashboard
       </Link>
       <Link
         to={{
-          pathname: '/analytics',
+          pathname: '/dashboard/analytics',
         }}
       >
         Analytics
       </Link>
       <Link
         to={{
-          pathname: '/logs',
+          pathname: '/dashboard/logs',
         }}
       >
         Logs
+      </Link>
+      <Link
+        to={{
+          pathname: '/dashboard/types',
+        }}
+      >
+        Types
       </Link>
     </section>
   );

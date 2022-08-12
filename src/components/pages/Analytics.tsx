@@ -1,9 +1,9 @@
-import Navbar from '../general/Navbar';
+import ProjectNavbar from '../general/ProjectNavbar';
 
 export default function Analytics() {
   return (
     <main>
-      <Navbar />
+      <ProjectNavbar />
       <section>Analytics</section>
     </main>
   );

@@ -1,10 +1,10 @@
 import { Dispatch, SetStateAction } from 'react';
 import { sleep } from '../../../../topLevelUtil/methods/sleep';
 import { Error } from '../../../../topLevelUtil/types/Error';
-import type { Log } from '../../../../topLevelUtil/types/Log';
+import { UserJourney } from '../../../../topLevelUtil/types/UserJourney';
 
 export const fetchLogs = async (
-  currentLogsStateFunc: Dispatch<SetStateAction<Log[]>>,
+  currentLogsStateFunc: Dispatch<SetStateAction<UserJourney[]>>,
   errorsStateFunc: Dispatch<SetStateAction<Error | null>>,
   initialFetchStateFunc: Dispatch<SetStateAction<boolean>>,
 ) => {
@@ -13,7 +13,6 @@ export const fetchLogs = async (
   try {
     response = await fetch('https://localhost:44370/Logs', {
       method: 'GET',
-      headers: { accept: 'text/plain' },
       mode: 'cors',
     });
   } catch {
@@ -26,7 +25,7 @@ export const fetchLogs = async (
     return;
   }
 
-  const logs: Log[] = await response.json();
+  const logs: UserJourney[] = await response.json();
 
   if (!logs) {
     const error = {
@@ -53,7 +52,7 @@ export const fetchLogs = async (
 };
 
 export const keepLogsUpdated = async (
-  currentLogsStateFunc: Dispatch<SetStateAction<Log[]>>,
+  currentLogsStateFunc: Dispatch<SetStateAction<UserJourney[]>>,
   updaterRunning: Dispatch<SetStateAction<boolean>>,
   currentWindow: string,
 ) => {
@@ -72,7 +71,7 @@ export const keepLogsUpdated = async (
       mode: 'cors',
     });
 
-    const logs: Log[] = await response.json();
+    const logs: UserJourney[] = await response.json();
 
     if (Array.isArray(logs)) {
       currentLogsStateFunc(logs);

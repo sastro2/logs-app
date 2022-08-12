@@ -1,10 +1,10 @@
-import Navbar from '../general/Navbar';
+import ProjectNavbar from '../general/ProjectNavbar';
 
 export default function Dashboard() {
   return (
     <main>
-      <Navbar />
-      <section>Overview</section>
+      <ProjectNavbar />
+      <section>Dashboard</section>
     </main>
   );
 }

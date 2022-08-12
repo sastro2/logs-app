@@ -1,47 +1,54 @@
 import { useState } from 'react';
+import { mockUserJourneys } from '../../mockData/mockUserJourneys';
 import { Error } from '../../topLevelUtil/types/Error';
-import type { Log } from '../../topLevelUtil/types/Log';
-import Navbar from '../general/Navbar';
+import { Log } from '../../topLevelUtil/types/Log';
+import { UserJourney } from '../../topLevelUtil/types/UserJourney';
+import LogsList from '../general/LogsList';
+import ProjectNavbar from '../general/ProjectNavbar';
+import UserJourneyList from '../general/UserJourneyList';
 import { fetchLogs, keepLogsUpdated } from './pagesUtil/methods/logsMethods';
 
 export default function Logs() {
-  const [currentLogs, setCurrentLogs] = useState<Log[]>([]);
+  const [currentUserJourneys, setCurrentUserJourneys] =
+    useState<UserJourney[]>(mockUserJourneys);
+  const [logsToDisplay, setLogsToDisplay] = useState<Log[]>([]);
   const [error, setError] = useState<Error | null>(null);
   const [updaterRunning, setUpdaterRunning] = useState<boolean>(false);
-  const [initialFetchDone, setInitialFetchDone] = useState<boolean>(false);
+  const [initialFetchDone, setInitialFetchDone] = useState<boolean>(true);
 
-  if (!initialFetchDone) {
-    fetchLogs(setCurrentLogs, setError, setInitialFetchDone);
+  if (!initialFetchDone && false) {
+    fetchLogs(setCurrentUserJourneys, setError, setInitialFetchDone);
   }
 
-  if (!updaterRunning && initialFetchDone) {
-    keepLogsUpdated(setCurrentLogs, setUpdaterRunning, '/logs');
+  if (!updaterRunning && initialFetchDone && false) {
+    keepLogsUpdated(setCurrentUserJourneys, setUpdaterRunning, '/logs');
   }
 
-  console.log(currentLogs);
+  if (logsToDisplay.length > 0) {
+    return (
+      <main>
+        <ProjectNavbar />
+        <LogsList logs={logsToDisplay} setLogsToDisplay={setLogsToDisplay} />
+      </main>
+    );
+  }
 
   if (initialFetchDone || error) {
     return (
       <main>
-        <Navbar />
-        <section>
-          {error
-            ? error.errorMessage
-            : currentLogs.map((log) => {
-                return (
-                  <p
-                    key={log.id}
-                  >{`${log.id} | ${log.projectId} | ${log.type} | ${log.message}`}</p>
-                );
-              })}
-        </section>
+        <ProjectNavbar />
+        <UserJourneyList
+          currentUserJourneys={currentUserJourneys}
+          error={error}
+          setLogsToDisplay={setLogsToDisplay}
+        />
       </main>
     );
   }
 
   return (
     <main>
-      <Navbar />
+      <ProjectNavbar />
       <h1>Loading...</h1>
     </main>
   );
