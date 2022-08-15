@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import LogManager from '../../_state/general/LogManager';
 import { mockUserJourneys } from '../../mockData/mockUserJourneys';
 import { Error } from '../../topLevelUtil/types/Error';
 import { Log } from '../../topLevelUtil/types/Log';
@@ -15,6 +16,13 @@ export default function Logs() {
   const [error, setError] = useState<Error | null>(null);
   const [updaterRunning, setUpdaterRunning] = useState<boolean>(false);
   const [initialFetchDone, setInitialFetchDone] = useState<boolean>(true);
+  const [selectedProject, setSelectedProject] = useState<number | undefined>(
+    LogManager.selectedProject,
+  );
+
+  if (selectedProject === undefined) {
+    window.location.href = 'http://localhost:3000';
+  }
 
   if (!initialFetchDone && false) {
     fetchLogs(setCurrentUserJourneys, setError, setInitialFetchDone);
