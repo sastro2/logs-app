@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { sleep } from '../../../../topLevelUtil/methods/sleep';
 import { Error } from '../../../../topLevelUtil/types/Error';
 import { UserJourney } from '../../../../topLevelUtil/types/UserJourney';
+import { validateApiResponse } from './generalMethods';
 
 export const fetchLogs = async (
   currentLogsStateFunc: Dispatch<SetStateAction<UserJourney[]>>,
@@ -27,21 +28,9 @@ export const fetchLogs = async (
 
   const logs: UserJourney[] = await response.json();
 
-  if (!logs) {
-    const error = {
-      errorMessage: 'Fetching logs failed',
-    };
+  const error = validateApiResponse(logs);
 
-    errorsStateFunc(error);
-    initialFetchStateFunc(true);
-    return;
-  }
-
-  if (!Array.isArray(logs)) {
-    const error = {
-      errorMessage: 'Fetch did not return an array',
-    };
-
+  if (error) {
     errorsStateFunc(error);
     initialFetchStateFunc(true);
     return;

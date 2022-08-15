@@ -1,8 +1,11 @@
 import { Dispatch, SetStateAction } from 'react';
 import { Error } from '../../../../topLevelUtil/types/Error';
+import { LogType } from '../../../../topLevelUtil/types/LogType';
+import { validateApiResponse } from './generalMethods';
 
 export const fetchTypes = async (
   setError: Dispatch<SetStateAction<Error | null>>,
+  setTypes: Dispatch<SetStateAction<LogType[]>>,
 ) => {
   let response;
 
@@ -17,7 +20,18 @@ export const fetchTypes = async (
     };
 
     setError(newError);
+    return;
   }
+
+  const types: LogType[] = await response.json();
+
+  const error = validateApiResponse(types);
+
+  if (error) {
+    setError(error);
+  }
+
+  setTypes(types);
 };
 
 export const createType = async (
