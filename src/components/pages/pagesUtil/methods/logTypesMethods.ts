@@ -6,6 +6,7 @@ import { validateApiResponse } from './generalMethods';
 export const fetchTypes = async (
   setError: Dispatch<SetStateAction<Error | null>>,
   setTypes: Dispatch<SetStateAction<LogType[]>>,
+  setInitialFetchDone: Dispatch<SetStateAction<boolean>>,
 ) => {
   let response;
 
@@ -20,6 +21,7 @@ export const fetchTypes = async (
     };
 
     setError(newError);
+    setInitialFetchDone(true);
     return;
   }
 
@@ -29,9 +31,11 @@ export const fetchTypes = async (
 
   if (error) {
     setError(error);
+    setInitialFetchDone(true);
   }
 
   setTypes(types);
+  setInitialFetchDone(true);
 };
 
 export const createType = async (

@@ -3,6 +3,7 @@ import LogManager from '../../_state/general/LogManager';
 import { mockUserJourneys } from '../../mockData/mockUserJourneys';
 import { Error } from '../../topLevelUtil/types/Error';
 import { Log } from '../../topLevelUtil/types/Log';
+import { Project } from '../../topLevelUtil/types/Project';
 import { UserJourney } from '../../topLevelUtil/types/UserJourney';
 import LogsList from '../general/LogsList';
 import ProjectNavbar from '../general/ProjectNavbar';
@@ -16,7 +17,7 @@ export default function Logs() {
   const [error, setError] = useState<Error | null>(null);
   const [updaterRunning, setUpdaterRunning] = useState<boolean>(false);
   const [initialFetchDone, setInitialFetchDone] = useState<boolean>(true);
-  const [selectedProject, setSelectedProject] = useState<number | undefined>(
+  const [selectedProject, setSelectedProject] = useState<Project | undefined>(
     LogManager.selectedProject,
   );
 
@@ -29,13 +30,20 @@ export default function Logs() {
   }
 
   if (!updaterRunning && initialFetchDone && false) {
-    keepLogsUpdated(setCurrentUserJourneys, setUpdaterRunning, '/logs');
+    keepLogsUpdated(
+      setCurrentUserJourneys,
+      setUpdaterRunning,
+      '/dashboard/logs',
+    );
   }
 
   if (logsToDisplay.length > 0) {
     return (
       <main>
-        <ProjectNavbar />
+        <ProjectNavbar
+          setSelectedProject={setSelectedProject}
+          setInitialFetchDone={setInitialFetchDone}
+        />
         <LogsList logs={logsToDisplay} setLogsToDisplay={setLogsToDisplay} />
       </main>
     );
@@ -44,7 +52,11 @@ export default function Logs() {
   if (initialFetchDone || error) {
     return (
       <main>
-        <ProjectNavbar />
+        <ProjectNavbar
+          setSelectedProject={setSelectedProject}
+          setInitialFetchDone={setInitialFetchDone}
+          setError={setError}
+        />
         <UserJourneyList
           currentUserJourneys={currentUserJourneys}
           error={error}
@@ -56,7 +68,10 @@ export default function Logs() {
 
   return (
     <main>
-      <ProjectNavbar />
+      <ProjectNavbar
+        setSelectedProject={setSelectedProject}
+        setInitialFetchDone={setInitialFetchDone}
+      />
       <h1>Loading...</h1>
     </main>
   );

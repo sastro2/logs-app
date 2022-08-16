@@ -19,8 +19,8 @@ export default function Overview() {
                 pathname: '/dashboard',
               }}
             >
-              <button onClick={() => LogManager.setSelectedProject(project.id)}>
-                {project.id}
+              <button onClick={() => LogManager.setSelectedProject(project)}>
+                {project.name}
               </button>
             </Link>
           );
@@ -34,6 +34,7 @@ export default function Overview() {
               ...projects,
               {
                 id: projects[projects.length - 1].id + 1,
+                name: `Project ${projects[projects.length - 1].id + 1}`,
               },
             ])
           }
