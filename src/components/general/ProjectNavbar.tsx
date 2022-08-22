@@ -59,7 +59,11 @@ export default function ProjectNavbar(props: ProjectNavbarProps) {
         ]}
       >
         {LogManager.allProjects.map((project) => {
-          return <option value={project.id}>{project.id}</option>;
+          return (
+            <option key={project.id} value={project.id}>
+              {project.id}
+            </option>
+          );
         })}
       </select>
     </section>

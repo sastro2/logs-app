@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
-import { Error } from '../../topLevelUtil/types/Error';
-import { Log } from '../../topLevelUtil/types/Log';
-import { UserJourney } from '../../topLevelUtil/types/UserJourney';
+import { Error } from '../../../topLevelUtil/types/Error';
+import { Log } from '../../../topLevelUtil/types/Log';
+import { UserJourney } from '../../../topLevelUtil/types/UserJourney';
 
 export type UserJourneyListProps = {
   currentUserJourneys: UserJourney[];

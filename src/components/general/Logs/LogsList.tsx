@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
-import { Log } from '../../topLevelUtil/types/Log';
+import { Log } from '../../../topLevelUtil/types/Log';
 
 export type LogsListProps = {
   logs: Log[];

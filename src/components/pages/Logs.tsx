@@ -5,9 +5,9 @@ import { Error } from '../../topLevelUtil/types/Error';
 import { Log } from '../../topLevelUtil/types/Log';
 import { Project } from '../../topLevelUtil/types/Project';
 import { UserJourney } from '../../topLevelUtil/types/UserJourney';
-import LogsList from '../general/LogsList';
+import LogsList from '../general/Logs/LogsList';
+import UserJourneyList from '../general/Logs/UserJourneyList';
 import ProjectNavbar from '../general/ProjectNavbar';
-import UserJourneyList from '../general/UserJourneyList';
 import { fetchLogs, keepLogsUpdated } from './pagesUtil/methods/logsMethods';
 
 export default function Logs() {

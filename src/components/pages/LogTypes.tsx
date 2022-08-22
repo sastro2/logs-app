@@ -5,6 +5,7 @@ import { mockTypes } from '../../mockData/mockTypes';
 import { Error } from '../../topLevelUtil/types/Error';
 import { LogType } from '../../topLevelUtil/types/LogType';
 import { Project } from '../../topLevelUtil/types/Project';
+import LogTypeList from '../general/LogTypeList';
 import ProjectNavbar from '../general/ProjectNavbar';
 import { fetchTypes } from './pagesUtil/methods/logTypesMethods';
 
@@ -35,13 +36,7 @@ export default function LogTypes() {
         <section>
           <h3>Your Types</h3>
           {types.length > 0 ? (
-            types.map((type) => {
-              return (
-                <p key={type.name}>
-                  {`${type.name}, Send immediately: ${type.sendImmediately}`}
-                </p>
-              );
-            })
+            <LogTypeList types={types} />
           ) : (
             <h4>No types found for project {selectedProject!.id} </h4>
           )}

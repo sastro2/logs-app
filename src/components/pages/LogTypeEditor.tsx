@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useRef, useState } from 'react';
 import LogManager from '../../_state/general/LogManager';
 import { mockTypes } from '../../mockData/mockTypes';
 import { LogType } from '../../topLevelUtil/types/LogType';
@@ -6,6 +6,7 @@ import { Project } from '../../topLevelUtil/types/Project';
 import ProjectNavbar from '../general/ProjectNavbar';
 import {
   handlePresetChange,
+  resetInputs,
   saveStyles,
 } from './pagesUtil/methods/logTypeEditorMethods';
 
@@ -16,6 +17,14 @@ export default function LogTypeEditor() {
   );
   const [selectedType, setSelectedType] = useState<LogType | null>(null);
   useState<string>('');
+
+  const logTypeRef = useRef<HTMLHeadingElement>(null);
+  const presetSelectRef = useRef<HTMLSelectElement>(null);
+  const fontSizeInputRef = useRef<HTMLInputElement>(null);
+  const colourInputRef = useRef<HTMLInputElement>(null);
+  const backgroundColourInputRef = useRef<HTMLInputElement>(null);
+
+  console.log(logTypeRef.current);
 
   if (selectedProject === undefined) {
     window.location.href = 'http://localhost:3000';
@@ -30,7 +39,25 @@ export default function LogTypeEditor() {
             <button
               key={type.name}
               onClick={() => {
-                setSelectedType(type);
+                console.log(type.styles);
+                resetInputs(
+                  presetSelectRef,
+                  fontSizeInputRef,
+                  colourInputRef,
+                  backgroundColourInputRef,
+                  logTypeRef,
+                );
+                setSelectedType({
+                  id: type.id,
+                  name: type.name,
+                  projectId: type.projectId,
+                  sendImmediately: type.sendImmediately,
+                  styles: {
+                    fontSize: type.styles.fontSize,
+                    colour: type.styles.colour,
+                    backgroundColour: type.styles.backgroundColour,
+                  },
+                });
               }}
             >
               {type.name}
@@ -41,6 +68,7 @@ export default function LogTypeEditor() {
       {selectedType ? (
         <section>
           <p
+            ref={logTypeRef}
             style={{
               fontSize: selectedType.styles.fontSize,
               color: selectedType.styles.colour,
@@ -50,10 +78,12 @@ export default function LogTypeEditor() {
             {selectedType.name}
           </p>
           <select
+            ref={presetSelectRef}
             onChange={(e) =>
               handlePresetChange(
                 selectedType,
                 setSelectedType,
+                logTypeRef,
                 e.currentTarget.value,
               )
             }
@@ -65,6 +95,7 @@ export default function LogTypeEditor() {
             <option value="standard">Standard</option>
           </select>
           <input
+            ref={fontSizeInputRef}
             onChange={(e) =>
               setSelectedType({
                 id: selectedType.id,
@@ -81,6 +112,7 @@ export default function LogTypeEditor() {
             placeholder="Font size"
           />
           <input
+            ref={colourInputRef}
             onChange={(e) =>
               setSelectedType({
                 id: selectedType.id,
@@ -97,6 +129,7 @@ export default function LogTypeEditor() {
             placeholder="Font colour"
           />
           <input
+            ref={backgroundColourInputRef}
             onChange={(e) =>
               setSelectedType({
                 id: selectedType.id,
