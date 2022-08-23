@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import LogManager from '../../_state/general/LogManager';
 import { mockProjects } from '../../mockData/mockProjects';
+import { mockTypes } from '../../mockData/mockTypes';
 import { Project } from '../../topLevelUtil/types/Project';
 
 export default function Overview() {
@@ -19,7 +20,7 @@ export default function Overview() {
                 pathname: '/dashboard',
               }}
             >
-              <button onClick={() => LogManager.setSelectedProject(project)}>
+              <button onClick={() => LogManager.Init(project, mockTypes)}>
                 {project.name}
               </button>
             </Link>

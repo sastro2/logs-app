@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 import { Log } from '../../../topLevelUtil/types/Log';
+import LogContainer from './LogContainer';
 
 export type LogsListProps = {
   logs: Log[];
@@ -9,19 +10,7 @@ export type LogsListProps = {
 export default function LogsList(props: LogsListProps) {
   return (
     <section>
-      {props.logs.map((log) => {
-        return (
-          <article key={log.id}>
-            <p>
-              {log.type}
-              {log.message}
-              {log.timestamp}
-              {log.id}
-              {log.projectId}
-            </p>
-          </article>
-        );
-      })}
+      <LogContainer logs={props.logs} />
       <button onClick={() => props.setLogsToDisplay([])}>back</button>
     </section>
   );
