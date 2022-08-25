@@ -2,6 +2,8 @@ import { mockProjects } from '../../mockData/mockProjects';
 import { LogType } from '../../topLevelUtil/types/LogType';
 import { Project } from '../../topLevelUtil/types/Project';
 
+// github test
+
 export default class LogManager {
   static inDevelopment: boolean = true;
   static selectedProject: Project | undefined;
